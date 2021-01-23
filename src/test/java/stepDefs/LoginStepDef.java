@@ -48,4 +48,11 @@ public void i_navigate_to() {
     	System.out.println("step 7");					
     }	
 
+	@Then("Error message should be displayed")					
+    public void verifyBookIsAdded(String errorMsg) throws Throwable 							
+    {    		
+    	System.out.println("step 8");					
+    }	
+
+
 }
