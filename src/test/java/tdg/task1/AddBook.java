@@ -1,10 +1,15 @@
 package tdg.task1;
 
 import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
 
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import utilities.PropFileHandler;
 
 public class AddBook extends BasePage {
@@ -16,7 +21,15 @@ public class AddBook extends BasePage {
 	public static By add = By.className("");
 	public static By bookSuccessfullyAdded = By.className("");
 	public static By errorMsg = By.className("");
-
+	
+	
+	private static final String BASE_URL = PropFileHandler.readProperty("appURL");
+	private static String token;
+	private static Response response;
+	private static String jsonString;
+	private static String bookId;
+	
+	
 	public AddBook(WebDriver driver) {
 		super(driver);
 	}
@@ -56,8 +69,26 @@ public class AddBook extends BasePage {
 		Reporter.log("Error appears on adding a book");
 	}
 	
+	public Response getRequest() {
+		RestAssured.baseURI = BASE_URL;
+		RequestSpecification request = RestAssured.given();
+		response = request.get();
+		return response;
+	}
 	
-	
+	public Response postRequest() {
+		RestAssured.baseURI = BASE_URL;
+		RequestSpecification request = RestAssured.given();
+		request.header("Authorization", "Bearer " + token)
+		.header("Content-Type", "application/json");
+		 
+		response = request.body("{\"title\": \"API DEMO\","
+				+ "\"price\": 99,"
+				+ "\"publication_date\": \"12/10/1995\","
+				+ "\"category\": \"Biography\"}")
+		.post();
+		return response;
+	}
 	
 	
 }
