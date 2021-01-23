@@ -11,6 +11,9 @@ Background: User should be able to launch url
     And I select the <category> of the book
     And I submit the above details
     Then I should be able to successfully submit the details
+    """
+    Success message
+    """
     
   Examples:
   	|title|price|pubDate|category|

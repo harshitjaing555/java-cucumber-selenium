@@ -5,7 +5,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import tdg.task1.TestSessionInitiator;		
 
-public class LoginStepDef {				
+public class StepDef {				
 
 	@Given("I navigate to the application UI")
 public void i_navigate_to() {
@@ -15,43 +15,43 @@ public void i_navigate_to() {
     @When("I enter {word} of the book")				
     public void enterTitle(String title) throws Throwable							
     {		
-    	System.out.println("step 2");					
+    	TestSessionInitiator.addBook.enterTitle(title);				
     }		
 
     @When("I enter {int} of respective book")				
-    public void enterPrice(int price) throws Throwable							
+    public void enterPrice(String price) throws Throwable							
     {		
-    	System.out.println("step 3");					
+    	TestSessionInitiator.addBook.enterPrice(price);		
     }
     
     @When("I enter {} in which book has been published")				
     public void enterPubDate(String pubDate) throws Throwable							
     {		
-    	System.out.println("step 4");					
+    	TestSessionInitiator.addBook.enterPubDate(pubDate);				
     }
     
     @When("I select the {word} of the book")				
     public void selectCategory(String category) throws Throwable							
     {		
-    	System.out.println("step 5");					
+    	TestSessionInitiator.addBook.selectCategory(category);			
     }
     
     @When("I submit the above details")				
-    public void selectContinue() throws Throwable							
+    public void selectAdd() throws Throwable							
     {		
-    	System.out.println("step 6");					
+    	TestSessionInitiator.addBook.selectAdd();				
     }
 
     @Then("I should be able to successfully submit the details")					
-    public void verifyBookIsAdded() throws Throwable 							
+    public void verifyBookIsAdded(String msg) throws Throwable 							
     {    		
-    	System.out.println("step 7");					
+    	TestSessionInitiator.addBook.bookIsSuccessfullyAdded(msg);
     }	
 
 	@Then("Error message should be displayed")					
-    public void verifyBookIsAdded(String errorMsg) throws Throwable 							
+    public void verifyErrorMsg(String errorMsg) throws Throwable 							
     {    		
-    	System.out.println("step 8");					
+		TestSessionInitiator.addBook.errorMsgIsDisplayed(errorMsg);				
     }	
 
 
