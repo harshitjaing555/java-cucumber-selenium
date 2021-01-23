@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
@@ -53,6 +54,29 @@ public class BasePage {
 		return false;
 	}
 	
+	protected boolean sendKeysOnElement(By elementToken, String text) {
+		try {
+			WebElement el = getElementWhenVisible(elementToken);
+			el.sendKeys(text);
+			return true;
+		} catch (NullPointerException npe) {
+			fail("[UNHANDLED EXCEPTION]: " + npe.getLocalizedMessage());
+		}
+		return false;
+	}
+	
+	
+	protected boolean selectByValueInList(By elementToken, String text) {
+		try {
+			Select s = new Select(getElementWhenVisible(elementToken));
+			s.selectByValue(text);
+			return true;
+		} catch (NullPointerException npe) {
+			fail("[UNHANDLED EXCEPTION]: " + npe.getLocalizedMessage());
+		}
+		return false;
+	}
+	
 	protected void clickOnElementViaJS(By elementToken) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", getElementWhenVisible(elementToken));
@@ -84,6 +108,19 @@ public class BasePage {
 			return true;
 		else
 			return false;
+	}
+	
+	protected boolean matchText(By elementToken,String text) {
+		try {
+			WebElement el = getElementWhenVisible(elementToken);
+			if(el.getText() ==text)
+				return true;
+			else
+				return false;
+		} catch (NullPointerException npe) {
+			fail("[UNHANDLED EXCEPTION]: " + npe.getLocalizedMessage());
+		}
+		return false;
 	}
 	
 	protected String getPassedAttribute(By elementToken, String attribute) {
