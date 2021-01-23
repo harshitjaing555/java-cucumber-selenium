@@ -16,12 +16,12 @@ private static int countAfter;
 
 
  
-@Given("A list of books are available")
+@Given("I fetch the list of current books")
 public void listOfBooksAreAvailable() {
 	
 }
  
-@When("I add a book via API call")
+@When("I add one more book")
 public void addBookInList() {
 	
 }
