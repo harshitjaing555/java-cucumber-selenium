@@ -7,7 +7,6 @@ import org.testng.Assert;
 import org.testng.Reporter;
 
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import utilities.PropFileHandler;
@@ -26,8 +25,6 @@ public class AddBook extends BasePage {
 	private static final String BASE_URL = PropFileHandler.readProperty("appURL");
 	private static String token;
 	private static Response response;
-	private static String jsonString;
-	private static String bookId;
 	
 	
 	public AddBook(WebDriver driver) {
@@ -76,6 +73,20 @@ public class AddBook extends BasePage {
 		return response;
 	}
 	
+	public Response getRequestAscending() {
+		RestAssured.baseURI = BASE_URL;
+		RequestSpecification request = RestAssured.given();
+		response = request.get("?sort=category,asc");
+		return response;
+	}
+	
+	public Response getRequestDescending() {
+		RestAssured.baseURI = BASE_URL;
+		RequestSpecification request = RestAssured.given();
+		response = request.get("?sort=category,desc");
+		return response;
+	}
+	
 	public Response postRequest() {
 		RestAssured.baseURI = BASE_URL;
 		RequestSpecification request = RestAssured.given();
@@ -90,5 +101,18 @@ public class AddBook extends BasePage {
 		return response;
 	}
 	
+	public Response postRequestWithBadBody() {
+		RestAssured.baseURI = BASE_URL;
+		RequestSpecification request = RestAssured.given();
+		request.header("Authorization", "Bearer " + token)
+		.header("Content-Type", "application/json");
+		 
+		response = request.body("{\"title\": \"\","
+				+ "\"price\": 99,"
+				+ "\"publication_date\": \"12/10/1995\","
+				+ "\"category\": \"Biography\"}")
+		.post();
+		return response;
+	}
 	
 }
